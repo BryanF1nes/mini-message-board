@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  a(class='button' href='/new') New Message
+  ul 
+    each message in messages 
+      div 
+        h2= message.user 
+        p= message.text 
+        p= message.added

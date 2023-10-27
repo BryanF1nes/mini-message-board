@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1 Add A Message 
+    form(action="/new" method="POST")
+        input(placeholder="user" name="user")
+        input(placeholder="text" name="text")
+        button send 
