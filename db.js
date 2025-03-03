@@ -13,4 +13,8 @@ const messages = [
     }
 ];
 
-module.exports = messages;
+async function messageById(messageId) {
+    return messages.find(message => message.id === messageId)
+};
+
+module.exports = { messages, messageById };

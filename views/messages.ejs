@@ -7,7 +7,7 @@
             <div>
                 <h3> <%= message.text %> - <span> <%= message.user %> </span></h3>
                 <p> <%= message.added %> </p>
-                <a href="/messages/<%=message.id %>">details</a>
+                <a href="/messages/<%= message.id %>">details</a>
             </div>
         <% }) %>
     </body>

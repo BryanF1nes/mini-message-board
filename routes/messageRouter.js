@@ -1,15 +1,14 @@
 const { Router } = require("express");
 const messageRouter = Router();
 
-const messageController = require("../controllers/messageController.js");
+const { getAllMessages, getMessageForm, postMessage, getMessageById } = require("../controllers/messageController.js");
 
-messageRouter.get("/", messageController);
+messageRouter.get("/", getAllMessages);
 
-messageRouter.get("/new", messageController);
+messageRouter.get("/new", getMessageForm);
 
-messageRouter.post("/new", messageController)
+messageRouter.post("/new", postMessage)
 
-// Get with user (either name or ID) in params
-// messageRouter.get("/")
+messageRouter.get("/:messageId", getMessageById)
 
 module.exports = messageRouter;
