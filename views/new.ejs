@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <form method="POST" action="/messages/new">
+            <label for="text">Text</label>
+            <input type="text" name="text" id="text">
+            <label for="user">User</label>
+            <input type="text" name="user" id="user">
+            <button type="submit">Post</button>
+        </form>
+    </body>
+</html>

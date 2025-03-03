@@ -14,11 +14,12 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // Middleware
+app.use(express.urlencoded({ extended: true }));
 
 
 // Routes
-app.get("/", indexRouter);
-app.get("/messages", messageRouter);
+app.use("/", indexRouter);
+app.use("/messages", messageRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on: localhost:${PORT}`);

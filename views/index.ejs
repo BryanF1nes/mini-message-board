@@ -3,16 +3,6 @@
         <title>Homepage</title>
     </head>
     <body>
-        <nav>
-            <ul>
-                <% for (let i = 0; i < links.length; i++) { %>
-                    <li>
-                        <a href="<%= links[i].href %>">
-                            <span> <%= links[i].text %> </span>
-                        </a>
-                    </li>
-                <% } %>
-            </ul>
-        </nav>
+        <%- include('nav', { links: links }) %>
     </body>
 </html>
