@@ -1,0 +1,363 @@
+/* =========================================
+   FONT IMPORT
+========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* =========================================
+   RESET
+========================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+html {
+    hanging-punctuation: first last;
+}
+
+body {
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul,
+ol {
+    list-style-position: inside;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+/* =========================================
+   DESIGN TOKENS
+========================================= */
+
+:root {
+    --bg: #ffffff;
+    --surface: #f8fafc;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+
+    --radius: 12px;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    --container-width: 1200px;
+}
+
+/* =========================================
+   BASE STYLES
+========================================= */
+
+body {
+    font-family:
+        'Inter',
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+p {
+    max-width: 70ch;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* =========================================
+   LAYOUT HELPERS
+========================================= */
+
+.container {
+    width: min(100% - 2rem, var(--container-width));
+    margin-inline: auto;
+}
+
+section {
+    padding-block: 4rem;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.75rem 1.25rem;
+
+    border: none;
+    border-radius: var(--radius);
+
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+button:hover,
+.btn:hover {
+    background: var(--primary-hover);
+}
+
+button:active,
+.btn:active {
+    transform: translateY(1px);
+}
+
+/* =========================================
+   FORM ELEMENTS
+========================================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 0.75rem 1rem;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    background: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid rgba(37, 99, 235, 0.2);
+    border-color: var(--primary);
+}
+
+/* =========================================
+   cards
+========================================= */
+
+.card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    max-width: 1280px;
+    flex-grow: 1;
+}
+
+/* =========================================
+    flex
+========================================= */
+
+.flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-1 {
+    gap: 8px;
+}
+
+.gap-2 {
+    gap: 16px;
+}
+
+/* =========================================
+    navigation
+========================================= */
+.nav {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.nav ul {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    list-style: none;
+    padding: 0;
+    min-height: 4rem;
+}
+
+.nav li {
+    position: relative;
+}
+
+.nav a {
+    display: flex;
+    align-items: center;
+
+    padding: 0.75rem 1rem;
+
+    color: #334155;
+    font-weight: 500;
+    font-size: 0.95rem;
+
+    border-radius: 10px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.nav a:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+}
+
+.nav a:active {
+    transform: translateY(1px);
+}
+
+.nav a::after {
+    content: '';
+
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.4rem;
+
+    height: 2px;
+
+    background: #2563eb;
+
+    transform: scaleX(0);
+    transform-origin: center;
+
+    transition: transform 0.2s ease;
+}
+
+.nav a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Keyboard accessibility */
+.nav a:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .nav {
+        padding: 0 1rem;
+    }
+
+    .nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        padding: 0.75rem 0;
+    }
+
+    .nav a {
+        padding: 0.65rem 0.9rem;
+    }
+}
+
+.mt-4 {
+    margin-top: 32px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
