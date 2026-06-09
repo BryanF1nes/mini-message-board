@@ -224,7 +224,7 @@ select:focus {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
     width: min(100%, 1400px);
 }
 
@@ -365,4 +365,8 @@ form {
     div {
         width: 100%;
     }
+}
+
+.view {
+    color: #2563eb;
 }

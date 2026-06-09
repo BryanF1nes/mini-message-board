@@ -43,4 +43,8 @@ async function getMessagesByUser(user) {
     return messages.find((message) => message.user === user);
 }
 
-module.exports = { getMessages, getMessageByID, getMessagesByUser };
+async function postMessage(message) {
+    return messages.push(message);
+}
+
+module.exports = { getMessages, getMessageByID, getMessagesByUser, postMessage };

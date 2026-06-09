@@ -23,4 +23,20 @@ async function getIndex(req, res) {
     return res.render("index", { links: links, messages: messages });
 }
 
-module.exports = { getMessages, getIndex };
+async function postMessage(req, res) {
+    const { user, text } = req.body;
+
+    const message = {
+        id: crypto.randomUUID(),
+        user: user,
+        text: text,
+        added: new Date(),
+    }
+
+    await db.postMessage(message);
+    console.log(await db.getMessages());
+
+    return res.redirect("/");
+}
+
+module.exports = { getMessages, getIndex, postMessage };
