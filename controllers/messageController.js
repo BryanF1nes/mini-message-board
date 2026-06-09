@@ -12,7 +12,7 @@ async function getMessages(req, res) {
         return;
     }
 
-    return res.render("index", { links: links, messages: messages });
+    return res.render("messages", { links: links, messages: messages });
 };
 
 async function getMessageById(req, res) {

@@ -10,8 +10,19 @@
             </div>
             <div class="card mt-4">
                 <h3>Messages</h3>
-                <%- include('messages', { messages: messages }); %>
+                <div class="flex gap-2">
+                    <% messages.forEach((message) => { %>
+                        <div id="<%= message.id %>" class="card">
+                            <h4><%= message.user %></h4>
+                            <p><%= message.text %></p>
+                            <p><%= message.added.toLocaleString() %> |
+                                <span class="view"><a href="messages/<%= message.id %>">View</a></span>
+                            </p>
+                        </div>
+                    <% }); %>
+                </div>
             </div>
         </div>
+        <%- include('footer'); %>
     </body>
 </html>
