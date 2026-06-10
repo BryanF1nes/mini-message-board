@@ -53,7 +53,7 @@ async function updateMessageByID(messageID, data) {
     message.text = data.text;
     message.added = data.added;
 
-    return true;
+    return;
 }
 
 module.exports = { getMessages, getMessageByID, getMessagesByUser, postMessage, updateMessageByID };
