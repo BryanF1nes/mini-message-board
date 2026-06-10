@@ -12,6 +12,10 @@ const validateUser = [
         .withMessage(lengthErr)
         .isAlpha()
         .withMessage(alphaErr),
+    body("text")
+        .trim()
+        .notEmpty()
+        .withMessage("You have to say something"),
 ];
 
 async function getMessageView(req, res) {
@@ -48,7 +52,7 @@ const postMessage = [
         if (!errors.isEmpty()) {
             const messages = await db.getMessages();
 
-            return res.status(400).render("index", {
+            return res.status(400).render("messages", {
                 links: links,
                 messages: messages,
                 errors: errors.array(),
@@ -66,7 +70,7 @@ const postMessage = [
         await db.postMessage(message);
         console.log(await db.getMessages());
 
-        return res.redirect("/");
+        return res.redirect("/messages");
     }
 ];
 

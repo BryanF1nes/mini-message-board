@@ -18,9 +18,13 @@
                                 <h4><%= message.user %></h4>
                                 <p><%= message.text %></p>
                                 <p>
-                                    <%= message.added.toLocaleString() %> |
+                                    <%= message.added.toLocaleString() %> -
                                     <span class="view">
                                         <a href="messages/<%= message.id %>">View</a>
+                                    </span>
+                            |
+                                    <span class="view">
+                                        <a href="messages/edit/<%= message.id %>">Edit</a>
                                     </span>
                                 </p>
                             </div>
