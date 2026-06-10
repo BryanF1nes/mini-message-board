@@ -17,9 +17,8 @@ const messages = [
 
 
 async function getMessages() {
-    let message;
     if (messages.length === 0) {
-        return message = "There doesn't appear to be any messages at this time";
+        return false
     }
 
     return messages;

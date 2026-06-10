@@ -5,20 +5,33 @@
     <body>
         <%- include('navbar', { liks: links }); %>
         <div class="container">
+            <div class="card">
+                <h3>Create A Message</h3>
+                <%- include('form') %>
+            </div>
             <div class="card mt-4">
                 <h3>Messages</h3>
                 <div class="flex gap-2">
-                    <% messages.forEach((message) => { %>
-                        <div id="<%= message.id %>" class="card">
-                            <h4><%= message.user %></h4>
-                            <p><%= message.text %></p>
-                            <p><%= message.added.toLocaleString() %> |
-                                <span class="view">
-                                    <a href="messages/edit/<%= message.id %>">Edit</a>
-                                </span>
-                            </p>
-                        </div>
-                    <% }); %>
+                 <% if (messages.length > 0) { %>
+                        <% messages.forEach((message) => { %>
+                            <div id="<%= message.id %>" class="card">
+                                <h4><%= message.user %></h4>
+                                <p><%= message.text %></p>
+                                <p>
+                                    <%= message.added.toLocaleString() %> -
+                                    <span class="view">
+                                        <a href="messages/<%= message.id %>">View</a>
+                                    </span>
+                            |
+                                    <span class="view">
+                                        <a href="messages/edit/<%= message.id %>">Edit</a>
+                                    </span>
+                                </p>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No messages found.</p>
+                    <% } %>
                 </div>
             </div>
         </div>
