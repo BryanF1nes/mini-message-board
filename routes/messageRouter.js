@@ -5,5 +5,6 @@ const messageRouter = Router();
 
 messageRouter.get("/", messageController.getMessages);
 messageRouter.get("/:messageId", messageController.getMessageById);
+messageRouter.get("/edit/:messageId", messageController.editMessageById);
 
 module.exports = messageRouter;

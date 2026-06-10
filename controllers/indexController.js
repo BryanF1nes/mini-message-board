@@ -37,6 +37,9 @@ async function getIndex(req, res) {
     return res.render("index", { links: links, messages: messages });
 }
 
+<span class="view">
+    <a href="messages/<%= message.id %>">View</a>
+</span>
 const postMessage = [
     validateUser,
     async (req, res) => {

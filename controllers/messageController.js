@@ -24,4 +24,13 @@ async function getMessageById(req, res) {
     return res.render("message", { links: links, message: message });
 }
 
-module.exports = { getMessages, getMessageById }
+async function editMessageById(req, res) {
+    const { messageId } = req.params;
+
+    const message = await db.getMessageByID(messageId);
+    console.log(message);
+
+    return res.render("editMessage", { links: links, message: message });
+}
+
+module.exports = { getMessages, getMessageById, editMessageById }
