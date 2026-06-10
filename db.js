@@ -3,8 +3,8 @@ const crypto = require("node:crypto");
 const messages = [
     {
         id: crypto.randomUUID(),
-        text: "Hi there!",
-        user: "Amando",
+        text: "Hello, and welcome to the mini-message-board! Written in Express and EJS.",
+        user: "Bryan",
         added: new Date(),
     },
     {
