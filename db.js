@@ -46,4 +46,14 @@ async function postMessage(message) {
     return messages.push(message);
 }
 
-module.exports = { getMessages, getMessageByID, getMessagesByUser, postMessage };
+async function updateMessageByID(messageID, data) {
+    const message = messages.find((message) => message.id === messageID);
+
+    message.user = data.user;
+    message.text = data.text;
+    message.added = data.added;
+
+    return true;
+}
+
+module.exports = { getMessages, getMessageByID, getMessagesByUser, postMessage, updateMessageByID };

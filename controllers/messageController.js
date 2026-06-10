@@ -2,16 +2,13 @@ const { body, validationResult, matchedData } = require("express-validator");
 const { links } = require("./indexController");
 const db = require("../db.js");
 
-const alphaErr = "User must only contain alphabet letters.";
 const lengthErr = "Must be between 1 and 10 characters.";
 
 const validateUser = [
     body("user")
         .trim()
         .isLength({ min: 1, max: 10 })
-        .withMessage(lengthErr)
-        .isAlpha()
-        .withMessage(alphaErr),
+        .withMessage(lengthErr),
     body("text")
         .trim()
         .notEmpty()
@@ -45,6 +42,32 @@ async function editMessageById(req, res) {
     return res.render("editMessage", { links: links, message: message });
 }
 
+const updateMessageById = [
+    validateUser,
+    async (req, res) => {
+        const { messageId } = req.params;
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            const message = await db.getMessageByID(messageId);
+            return res.status(400).render("editMessage", {
+                links: links,
+                message: message,
+                errors: errors.array(),
+            })
+        }
+
+        const { user, text } = matchedData(req);
+        await db.updateMessageByID(messageId, {
+            user: user,
+            text: text,
+            added: new Date(),
+        })
+
+        return res.redirect("/messages");
+    }
+];
+
 const postMessage = [
     validateUser,
     async (req, res) => {
@@ -75,4 +98,4 @@ const postMessage = [
 ];
 
 
-module.exports = { getMessageView, getMessageById, editMessageById, postMessage }
+module.exports = { getMessageView, getMessageById, editMessageById, postMessage, updateMessageById }

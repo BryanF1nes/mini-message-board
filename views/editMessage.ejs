@@ -6,7 +6,7 @@
         <%- include('navbar', { liks: links }); %>
         <div class="container">
             <div class="card">
-                <form method="POST" action="/update">
+                <form method="POST" action="/messages/edit/<%= message.id %>">
                   <div>
                     <label for="user">Your Name</label>
                     <input
