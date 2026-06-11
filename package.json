@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "populate": "node ./db/populatedb.js"
   },
   "keywords": [],
   "author": "",

@@ -3,13 +3,29 @@ const { Client } = require("pg");
 const SQL = `
 CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user VARCHAR ( 255 ),
+    username VARCHAR(255),
     message TEXT,
-    added 
+    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO messages (messages)
+INSERT INTO messages (username, message)
 VALUES
-    ('Hello world!'),
-    ('
-`
+    ('Bryan', 'Hello world!'),
+    ('Jason', 'This is cool.');
+`;
+
+async function main() {
+    console.log("seeding...");
+
+    const client = new Client({
+        connectionString: "postgresql://bryan:root@localhost:5432/mini_message_board",
+    });
+    await client.connect();
+    console.log("connected...");
+    await client.query(SQL);
+    console.log("querying...");
+    await client.end();
+    console.log("done");
+}
+
+main();
