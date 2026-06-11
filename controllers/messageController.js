@@ -1,6 +1,7 @@
 const { body, validationResult, matchedData } = require("express-validator");
 const { links } = require("./indexController");
-const db = require("../db.js");
+const { Message } = require("../models/Message");
+const Database = require("../db");
 
 const lengthErr = "Must be between 1 and 10 characters.";
 
@@ -15,8 +16,9 @@ const validateUser = [
         .withMessage("You have to say something"),
 ];
 
-async function getMessageView(req, res) {
-    const messages = await db.getMessages();
+function getMessageView(req, res) {
+    const messages = Database.getMessages();
+    console.log(messages);
 
     if (!messages) {
         res.status(404).send("Messages could not be loaded at this time.");
@@ -26,18 +28,18 @@ async function getMessageView(req, res) {
     return res.render("messages", { links: links, messages: messages });
 };
 
-async function getMessageById(req, res) {
+function getMessageById(req, res) {
     const { messageId } = req.params;
 
-    const message = await db.getMessageByID(messageId);
+    const message = Database.getMessageByID(messageId);
 
     return res.render("message", { links: links, message: message });
 }
 
-async function editMessageById(req, res) {
+function editMessageById(req, res) {
     const { messageId } = req.params;
 
-    const message = await db.getMessageByID(messageId);
+    const message = Database.getMessageByID(messageId);
 
     return res.render("editMessage", { links: links, message: message });
 }
@@ -49,7 +51,7 @@ const updateMessageById = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            const message = await db.getMessageByID(messageId);
+            const message = Database.getMessageByID(messageId);
             return res.status(400).render("editMessage", {
                 links: links,
                 message: message,
@@ -58,10 +60,9 @@ const updateMessageById = [
         }
 
         const { user, text } = matchedData(req);
-        await db.updateMessageByID(messageId, {
+        Database.updateMessageByID(messageId, {
             user: user,
             text: text,
-            added: new Date(),
         })
 
         return res.redirect("/messages");
@@ -70,10 +71,10 @@ const updateMessageById = [
 
 const postMessage = [
     validateUser,
-    async (req, res) => {
+    (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            const messages = await db.getMessages();
+            const messages = Database.getMessages();
 
             return res.status(400).render("messages", {
                 links: links,
@@ -83,15 +84,10 @@ const postMessage = [
         }
 
         const { user, text } = matchedData(req);
-        const message = {
-            id: crypto.randomUUID(),
-            user: user,
-            text: text,
-            added: new Date(),
-        }
+        const message = new Message(user, text);
 
-        await db.postMessage(message);
-        console.log(await db.getMessages());
+        Database.postMessage(message);
+        console.log(Database.getMessages());
 
         return res.redirect("/messages");
     }

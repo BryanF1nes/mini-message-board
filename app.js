@@ -9,6 +9,10 @@ const messageRouter = require("./routes/messageRouter.js");
 // Styles
 const assetsPath = path.join(__dirname, "public");
 
+// Populate
+const { populate } = require("./populate");
+populate();
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
