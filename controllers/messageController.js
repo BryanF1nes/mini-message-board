@@ -44,6 +44,15 @@ function editMessageById(req, res) {
     return res.render("editMessage", { links: links, message: message });
 }
 
+function getMessageByUser(req, res) {
+    const { user } = req.query;
+
+    const messages = Database.getMessagesByUser(user);
+    console.log(typeof messages);
+
+    return res.render("messages", { links: links, messages: messages });
+}
+
 const updateMessageById = [
     validateUser,
     async (req, res) => {
@@ -94,4 +103,4 @@ const postMessage = [
 ];
 
 
-module.exports = { getMessageView, getMessageById, editMessageById, postMessage, updateMessageById }
+module.exports = { getMessageView, getMessageById, editMessageById, postMessage, updateMessageById, getMessageByUser }

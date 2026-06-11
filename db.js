@@ -24,7 +24,7 @@ class Database {
             return message = "That user doesn't exist";
         }
 
-        return this.messages.find((message) => message.user === user);
+        return this.messages.filter((message) => message.user === user);
     }
 
     postMessage(message) {
