@@ -385,3 +385,8 @@ form {
         width: 300px;
     }
 }
+
+textarea {
+    resize: vertical;
+    max-height: 300px;
+}
