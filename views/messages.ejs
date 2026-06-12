@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/css/styles.css">
     </head>
     <body>
         <%- include('navbar', { liks: links }); %>
@@ -18,7 +18,9 @@
                                 <h4><%= message.username %></h4>
                                 <p><%= message.message %></p>
                                 <p>
-                                    <%= message.date_added.toLocaleString() %> -
+                                    <span class="message-date" data-date="<%= message.date_added.toISOString() %>">
+                                        Loading...
+                                    </span>
                                     <span class="view">
                                         <a href="messages/<%= message.id %>">View</a>
                                     </span>
@@ -36,5 +38,6 @@
             </div>
         </div>
         <%- include('footer'); %>
+        <script src="/js/messages.js"></script>
     </body>
 </html>
