@@ -29,10 +29,18 @@ async function postMessage(username, message) {
     return;
 }
 
+// Changelogs
+async function getChangelogs() {
+    const { rows } = await pool.query("SELECT * FROM changelog");
+
+    return rows;
+}
+
 module.exports = {
     getAllMessages,
     getMessageById,
     getMessageByUser,
     updateMessageById,
-    postMessage
+    postMessage,
+    getChangelogs
 }

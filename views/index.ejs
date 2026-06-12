@@ -20,21 +20,9 @@
 
             <div class="card mt-4">
                 <h3>Changelog:</h3>
-
-        <% changelog.items.forEach((change) => { %>
-            <li>✅ <%= change.message %></li>
-        <% }); %>
-                <div class="card">
-                    <h4>06/12/2026, 10:12:23 AM</h4>
-                    <div>
-                        <p><b>Changelog Description:</b> Upgraded to a PostgreSQL database and included the ability to search through messages regardless of case sensitivity.</p>
-                    </div>
-                    <ul>
-                        <b>Changelog items:</b>
-                        <li>✅ Upgrade to a SQL lite or Postgres Database</li>
-                        <li>✅ Allow for searching, filtering, etc of messages</li>
-                    </ul>
-                </div>
+                <% changes.forEach((change) => { %>
+                    <%- include("changelog/changelog", { changelog: change }) %>
+                <% }); %>
             </div>
 
             <div class="card mt-4">
