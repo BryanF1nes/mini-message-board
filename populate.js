@@ -3,12 +3,16 @@ const { Message } = require("./models/Message");
 
 const messages = [
     {
-        user: "Bryan",
+        user: "bryan",
         text: "Hello world!"
     },
     {
-        user: "Jason",
+        user: "jason",
         text: "This is a pretty cool site."
+    },
+    {
+        user: "david",
+        text: "Hi there my name is David."
     }
 ];
 

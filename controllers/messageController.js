@@ -1,24 +1,22 @@
 const { body, validationResult, matchedData } = require("express-validator");
 const { links } = require("./indexController");
-const { Message } = require("../models/Message");
-const Database = require("../db");
+const db = require("../db/queries");
 
 const lengthErr = "Must be between 1 and 10 characters.";
 
 const validateUser = [
-    body("user")
+    body("username")
         .trim()
         .isLength({ min: 1, max: 10 })
         .withMessage(lengthErr),
-    body("text")
+    body("message")
         .trim()
         .notEmpty()
         .withMessage("You have to say something"),
 ];
 
-function getMessageView(req, res) {
-    const messages = Database.getMessages();
-    console.log(messages);
+async function getMessageView(req, res) {
+    const messages = await db.getAllMessages()
 
     if (!messages) {
         res.status(404).send("Messages could not be loaded at this time.");
@@ -28,27 +26,30 @@ function getMessageView(req, res) {
     return res.render("messages", { links: links, messages: messages });
 };
 
-function getMessageById(req, res) {
+async function getMessageById(req, res) {
     const { messageId } = req.params;
 
-    const message = Database.getMessageByID(messageId);
+    const message = await db.getMessageById(messageId);
 
     return res.render("message", { links: links, message: message });
 }
 
-function editMessageById(req, res) {
+async function editMessageById(req, res) {
     const { messageId } = req.params;
 
-    const message = Database.getMessageByID(messageId);
+    const message = await db.getMessageById(messageId);
 
     return res.render("editMessage", { links: links, message: message });
 }
 
-function getMessageByUser(req, res) {
-    const { user } = req.query;
+async function getMessageByUser(req, res) {
+    const { username } = req.query;
 
-    const messages = Database.getMessagesByUser(user);
-    console.log(typeof messages);
+    if (username.toLowerCase() === "") {
+        return res.redirect("/messages");
+    }
+
+    const messages = await db.getMessageByUser(username.toLowerCase());
 
     return res.render("messages", { links: links, messages: messages });
 }
@@ -60,7 +61,7 @@ const updateMessageById = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            const message = Database.getMessageByID(messageId);
+            const message = await db.getMessageById(messageId);
             return res.status(400).render("editMessage", {
                 links: links,
                 message: message,
@@ -68,11 +69,8 @@ const updateMessageById = [
             })
         }
 
-        const { user, text } = matchedData(req);
-        Database.updateMessageByID(messageId, {
-            user: user,
-            text: text,
-        })
+        const { username, message } = matchedData(req);
+        db.updateMessageById(messageId, { username: username, message: message })
 
         return res.redirect("/messages");
     }
@@ -80,10 +78,10 @@ const updateMessageById = [
 
 const postMessage = [
     validateUser,
-    (req, res) => {
+    async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            const messages = Database.getMessages();
+            const messages = await db.getAllMessages();
 
             return res.status(400).render("messages", {
                 links: links,
@@ -92,11 +90,8 @@ const postMessage = [
             });
         }
 
-        const { user, text } = matchedData(req);
-        const message = new Message(user, text);
-
-        Database.postMessage(message);
-        console.log(Database.getMessages());
+        const { username, message } = matchedData(req);
+        await db.postMessage(username, message);
 
         return res.redirect("/messages");
     }
