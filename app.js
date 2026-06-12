@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("node:path");
 const app = express();
@@ -21,11 +22,11 @@ app.use(express.static(assetsPath));
 app.use("/", indexRouter);
 app.use("/messages", messageRouter);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, (error) => {
-    if (error) {
-        throw new Error(error.message);
-    }
+   if (error) {
+      throw new Error(error.message);
+   }
 
-    console.log(`Express app listening on port: ${PORT}`);
+   console.log(`Express app listening on port: ${PORT}`);
 });

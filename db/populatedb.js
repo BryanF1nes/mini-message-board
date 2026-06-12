@@ -18,7 +18,7 @@ async function main() {
     console.log("seeding...");
 
     const client = new Client({
-        connectionString: "postgresql://bryan:root@localhost:5432/mini_message_board",
+        connectionString: process.env.CONNECTION_STRING,
     });
     await client.connect();
     console.log("connected...");
