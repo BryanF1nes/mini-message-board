@@ -1,8 +1,6 @@
 const { body, validationResult, matchedData } = require("express-validator");
 const { links } = require("./indexController");
-const { Message } = require("../models/Message");
 const db = require("../db/queries");
-const Database = require("../db");
 
 const lengthErr = "Must be between 1 and 10 characters.";
 
@@ -47,11 +45,11 @@ async function editMessageById(req, res) {
 async function getMessageByUser(req, res) {
     const { username } = req.query;
 
-    if (username === "") {
+    if (username.toLowerCase() === "") {
         return res.redirect("/messages");
     }
 
-    const messages = await db.getMessageByUser(username);
+    const messages = await db.getMessageByUser(username.toLowerCase());
 
     return res.render("messages", { links: links, messages: messages });
 }
