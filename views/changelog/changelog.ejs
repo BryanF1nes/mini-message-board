@@ -1,0 +1,12 @@
+<div class="card mt-4">
+    <h4><%= changelog.date_added.toLocaleString() %></h4>
+    <div>
+        <p><b>Changelog Description:</b> <%= changelog.description %></p>
+    </div>
+    <ul>
+        <b>Changelog items:</b>
+        <% changelog.items.forEach((change) => { %>
+            <li>✅ <%= change.message %></li>
+        <% }); %>
+    </ul>
+</div>
