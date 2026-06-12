@@ -8,10 +8,10 @@ CREATE TABLE IF NOT EXISTS messages (
     date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO messages (username, message)
+INSERT INTO messages (username, message, date_added)
 VALUES
-    ('Bryan', 'Hello world!'),
-    ('Jason', 'This is cool.');
+    ('Bryan', 'Hello world!', now()),
+    ('Jason', 'This is cool.', now());
 `;
 
 async function main() {
