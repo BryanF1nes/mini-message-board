@@ -391,3 +391,10 @@ textarea {
     max-height: 300px;
     min-height: 60px;
 }
+
+.errors {
+    list-style: none;
+    padding: 0px;
+    margin-bottom: 16px;
+    color: red;
+}
