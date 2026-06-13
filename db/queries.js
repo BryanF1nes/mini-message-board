@@ -36,11 +36,18 @@ async function getChangelogs() {
     return rows;
 }
 
+async function postChangelog(description, changeItems) {
+    await pool.query("INSERT INTO changelog (description, items) VALUES ($1, $2)", [description, changeItems]);
+
+    return;
+}
+
 module.exports = {
     getAllMessages,
     getMessageById,
     getMessageByUser,
     updateMessageById,
     postMessage,
-    getChangelogs
+    getChangelogs,
+    postChangelog
 }

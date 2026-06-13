@@ -1,0 +1,36 @@
+<%- include("../partials/errors.ejs") %>
+<form method="POST" action="/admin/changelog/create">
+  <div>
+    <label for="descrption">Description</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      placeholder="Enter the version number and description (e.g - Version 1.0.1 - HTML Support)"
+      required
+    >
+  </div>
+
+  <div>
+    <label for="changes">Enter changes</label>
+    <textarea
+      id="changes"
+      name="changes"
+      rows="5"
+      placeholder="Enter the changes, each change should be on a new line"
+      required
+    ></textarea>
+  </div>
+
+  <div>
+    <label for="password">Admin password</label>
+    <input 
+      id="password" 
+      name="password" 
+      type="password" 
+      required
+    >
+  </div>
+
+  <button type="submit">Post Changelog</button>
+</form>
