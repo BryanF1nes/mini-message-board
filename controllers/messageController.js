@@ -4,7 +4,7 @@ const db = require("../db/queries");
 
 const lengthErr = "Must be between 1 and 10 characters.";
 
-const validateUser = [
+const validateMessage = [
     body("username")
         .trim()
         .isLength({ min: 1, max: 10 })
@@ -47,7 +47,7 @@ async function getMessageByUser(req, res) {
 }
 
 const postMessage = [
-    validateUser,
+    validateMessage,
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
