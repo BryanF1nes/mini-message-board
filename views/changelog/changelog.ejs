@@ -1,5 +1,5 @@
 <div class="card mt-4">
-    <h4><%= changelog.date_added.toLocaleString() %></h4>
+    <h4 class="message-date" data-date="<%= changelog.date_added.toISOString() %>">Loading...</h4>
     <div>
         <p><b>Changelog Description:</b> <%= changelog.description %></p>
     </div>
@@ -10,3 +10,4 @@
         <% }); %>
     </ul>
 </div>
+<script src="/js/messages.js"></script>
