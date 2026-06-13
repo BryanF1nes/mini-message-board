@@ -8,6 +8,15 @@ CREATE TABLE IF NOT EXISTS messages (
     date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE TABLE IF NOT EXISTS changelog (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    description TEXT NOT NULL,
+    date_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    items TEXT[] NOT NULL
+);
+
 INSERT INTO messages (username, message, date_added)
 VALUES
     ('Bryan', 'Hello world!', now()),
