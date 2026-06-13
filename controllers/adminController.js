@@ -14,7 +14,9 @@ async function postChangelog(req, res) {
         res.redirect("admin/admin");
     }
 
-    return await db.postChangelog(description, changeItems);
+    await db.postChangelog(description, changeItems);
+
+    return res.redirect("/");
 }
 
 module.exports = {
