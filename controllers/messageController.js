@@ -34,14 +34,6 @@ async function getMessageById(req, res) {
     return res.render("message", { links: links, message: message });
 }
 
-async function editMessageById(req, res) {
-    const { messageId } = req.params;
-
-    const message = await db.getMessageById(messageId);
-
-    return res.render("editMessage", { links: links, message: message });
-}
-
 async function getMessageByUser(req, res) {
     const { username } = req.query;
 
@@ -53,28 +45,6 @@ async function getMessageByUser(req, res) {
 
     return res.render("messages", { links: links, messages: messages });
 }
-
-const updateMessageById = [
-    validateUser,
-    async (req, res) => {
-        const { messageId } = req.params;
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            const message = await db.getMessageById(messageId);
-            return res.status(400).render("editMessage", {
-                links: links,
-                message: message,
-                errors: errors.array(),
-            })
-        }
-
-        const { username, message } = matchedData(req);
-        db.updateMessageById(messageId, { username: username, message: message })
-
-        return res.redirect("/messages");
-    }
-];
 
 const postMessage = [
     validateUser,
@@ -98,4 +68,4 @@ const postMessage = [
 ];
 
 
-module.exports = { getMessageView, getMessageById, editMessageById, postMessage, updateMessageById, getMessageByUser }
+module.exports = { getMessageView, getMessageById, postMessage, getMessageByUser }
