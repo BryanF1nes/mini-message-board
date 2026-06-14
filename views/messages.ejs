@@ -5,10 +5,14 @@
     <body>
         <%- include('navbar', { liks: links }); %>
         <div class="container">
+            <% if (currentUser) { %>
             <div class="card">
                 <h3>Create A Message</h3>
                 <%- include('form') %>
             </div>
+            <% } else { %>
+                <p>You need to create an account to create messages.</p>
+            <% } %>
             <div class="card mt-4">
                 <h3>Messages</h3>
                 <div class="flex gap-2">
@@ -16,7 +20,7 @@
                         <% messages.forEach((message) => { %>
                             <div id="<%= message.id %>" class="card">
                                 <h4><%= message.username %></h4>
-                                <p><%= message.message %></p>
+                                <p><%= message.body %></p>
                                 <p>
                                     <span class="message-date" data-date="<%= message.date_added.toISOString() %>">
                                         Loading...

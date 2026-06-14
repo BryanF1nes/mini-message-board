@@ -1,12 +1,23 @@
 require("dotenv").config();
+const bcrypt = require("bcryptjs");
 const express = require("express");
 const path = require("node:path");
+const pool = require("./db/pool.js");
+
+// Authentication
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+
 const app = express();
 
 // Routes
 const indexRouter = require("./routes/indexRouter.js");
 const messageRouter = require("./routes/messageRouter.js");
 const adminRouter = require("./routes/adminRouter.js");
+const signupRouter = require("./routes/signupRouter.js");
+const loginRouter = require("./routes/loginRouter.js");
+const logoutRouter = require("./routes/logoutRouter.js");
 
 // Styles
 const assetsPath = path.join(__dirname, "public");
@@ -15,14 +26,59 @@ const assetsPath = path.join(__dirname, "public");
 const { populate } = require("./populate");
 populate();
 
+// Middleware + Setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }));
+app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
+passport.use(new LocalStrategy(async (username, password, done) => {
+    try {
+        const { rows } = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+        const user = rows[0];
+
+        if (!user) {
+            return done(null, false, { message: "Incorrect username" });
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return done(null, false, { message: "Incorrect password" });
+        }
+
+        return done(null, user);
+    } catch (err) {
+        return done(err);
+    }
+}));
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+        const user = rows[0];
+
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
+});
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
+
+// Routes
 app.use("/", indexRouter);
 app.use("/messages", messageRouter);
 app.use("/admin", adminRouter);
+app.use("/sign-up", signupRouter);
+app.use("/log-in", loginRouter);
+app.use("/log-out", logoutRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, (error) => {

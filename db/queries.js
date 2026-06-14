@@ -1,13 +1,13 @@
 const pool = require("./pool.js");
 
 async function getAllMessages() {
-    const { rows } = await pool.query("SELECT * FROM messages");
+    const { rows } = await pool.query("SELECT users.username, messages.id, messages.body, messages.date_added FROM messages JOIN users ON messages.user_id = users.id;");
 
     return rows;
 }
 
 async function getMessageById(messageId) {
-    const { rows } = await pool.query("SELECT * FROM messages WHERE id = ($1)", [messageId]);
+    const { rows } = await pool.query("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.id WHERE messages.id = $1", [messageId]);
 
     return rows[0];
 }
@@ -18,15 +18,13 @@ async function updateMessageById(messageId, data) {
 }
 
 async function getMessageByUser(username) {
-    const { rows } = await pool.query("SELECT * FROM messages WHERE LOWER(username) = ($1)", [username]);
+    const { rows } = await pool.query("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.id WHERE LOWER(users.username) = $1", [username]);
 
     return rows;
 }
 
-async function postMessage(username, message) {
-    await pool.query("INSERT INTO messages (username, message) VALUES ($1, $2)", [username, message]);
-
-    return;
+async function postMessage(userId, body) {
+    return await pool.query("INSERT INTO messages (user_id, body) VALUES ($1, $2)", [userId, body]);
 }
 
 // Changelogs
