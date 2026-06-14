@@ -1,13 +1,32 @@
-<div class="card mt-4">
-    <h4 class="message-date" data-date="<%= changelog.date_added.toISOString() %>">Loading...</h4>
-    <div>
-        <p><b>Changelog Description:</b> <%= changelog.description %></p>
-    </div>
-    <ul>
-        <b>Changelog items:</b>
-        <% changelog.items.forEach((change) => { %>
-            <li>✅ <%= change %></li>
-        <% }); %>
+<div class="mt-4 w-full rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
+
+  <h4
+    class="message-date mb-3 text-sm font-medium text-slate-500"
+    data-date="<%= changelog.date_added.toISOString() %>"
+  >
+    Loading...
+  </h4>
+
+  <div class="mb-3">
+    <p class="text-slate-700">
+      <span class="font-semibold text-slate-900">Changelog Description:</span>
+      <%= changelog.description %>
+    </p>
+  </div>
+
+  <div>
+    <p class="mb-2 font-semibold text-slate-900">
+      Changelog items:
+    </p>
+
+    <ul class="space-y-1 text-slate-700">
+      <% changelog.items.forEach((change) => { %>
+        <li class="flex items-start gap-2">
+          <span>✅</span>
+          <span><%= change %></span>
+        </li>
+      <% }); %>
     </ul>
+  </div>
+
 </div>
-<script src="/js/messages.js"></script>

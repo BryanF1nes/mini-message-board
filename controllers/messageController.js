@@ -18,7 +18,7 @@ async function getMessageView(req, res) {
         return;
     }
 
-    return res.render("messages", { links: links(req), messages: messages });
+    return res.render("base-template", { title: "Messages", content: "messages", links: links(req), messages: messages });
 };
 
 async function getMessageById(req, res) {

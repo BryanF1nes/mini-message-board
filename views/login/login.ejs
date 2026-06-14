@@ -1,25 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-        <%- include("../navbar") %>
-        <div class="container">
-            <div class="card">
-                <h3><%= title %></h3>
-                <form action="/log-in" method="POST">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                    <button type="submit"><%= title %></button>
-                </form>
-            </div>
-        </div>
-        <%- include("../footer") %>
-</body>
-</html>
+<main class="mx-auto flex max-w-md flex-col items-center px-6 py-12">
+  <div class="w-full rounded-[12px] border border-slate-200 bg-white p-6 shadow-md">
+
+    <h3 class="mb-6 text-xl font-bold text-slate-900">
+      <%= title %>
+    </h3>
+
+    <form action="/log-in" method="POST" class="flex flex-col gap-4">
+
+      <!-- Username -->
+      <div class="flex flex-col gap-2">
+        <label for="username" class="text-sm font-medium text-slate-700">
+          Username
+        </label>
+
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username"
+          required
+          class="rounded-[12px] border border-slate-200 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
+        >
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-2">
+        <label for="password" class="text-sm font-medium text-slate-700">
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+          class="rounded-[12px] border border-slate-200 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
+        >
+      </div>
+
+      <!-- Button -->
+      <button
+        type="submit"
+        class="mt-2 rounded-[12px] bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700 active:translate-y-px"
+      >
+        <%= title %>
+      </button>
+
+    </form>
+
+  </div>
+</main>
