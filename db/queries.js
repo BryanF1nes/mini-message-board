@@ -18,7 +18,7 @@ async function updateMessageById(messageId, data) {
 }
 
 async function getMessageByUser(username) {
-    const { rows } = await pool.query("SELECT * FROM messages WHERE LOWER(username) = ($1)", [username]);
+    const { rows } = await pool.query("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.id WHERE LOWER(users.username) = $1", [username]);
 
     return rows;
 }
