@@ -18,7 +18,7 @@ const validateAdmin = [
 ];
 
 function getChangelog(req, res) {
-    return res.render("admin/admin", { links: links });
+    return res.render("admin/admin", { links: links(req) });
 }
 
 const postChangelog = [
@@ -27,7 +27,7 @@ const postChangelog = [
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).render("admin/admin", {
-                links: links,
+                links: links(req),
                 errors: errors.array(),
             });
         }

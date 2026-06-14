@@ -15,7 +15,9 @@ const app = express();
 const indexRouter = require("./routes/indexRouter.js");
 const messageRouter = require("./routes/messageRouter.js");
 const adminRouter = require("./routes/adminRouter.js");
-const signUpRouter = require("./routes/signUpRouter.js");
+const signupRouter = require("./routes/signupRouter.js");
+const loginRouter = require("./routes/loginRouter.js");
+const logoutRouter = require("./routes/logoutRouter.js");
 
 // Styles
 const assetsPath = path.join(__dirname, "public");
@@ -32,27 +34,25 @@ app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: 
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
-app.use(
-    new LocalStrategy(async (username, password, done) => {
-        try {
-            const { rows } = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
-            const user = rows[0];
+passport.use(new LocalStrategy(async (username, password, done) => {
+    try {
+        const { rows } = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+        const user = rows[0];
 
-            if (!user) {
-                return done(null, false, { message: "Incorrect username" });
-            }
-
-            if (user.password !== password) {
-                return done(null, false, { message: "Incorrect password" });
-            }
-            return done(null, user);
-
-        } catch (err) {
-            return done(err);
+        if (!user) {
+            return done(null, false, { message: "Incorrect username" });
         }
-    })
-);
 
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return done(null, false, { message: "Incorrect password" });
+        }
+
+        return done(null, user);
+    } catch (err) {
+        return done(err);
+    }
+}));
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
@@ -67,12 +67,18 @@ passport.deserializeUser(async (id, done) => {
         done(err);
     }
 });
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // Routes
 app.use("/", indexRouter);
 app.use("/messages", messageRouter);
 app.use("/admin", adminRouter);
-app.use("/sign-up", signUpRouter);
+app.use("/sign-up", signupRouter);
+app.use("/log-in", loginRouter);
+app.use("/log-out", logoutRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, (error) => {

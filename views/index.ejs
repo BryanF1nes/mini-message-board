@@ -6,7 +6,11 @@
         <%- include('navbar', { links: links }); %>
         <div class="container">
             <div class="card">
-                <h3>Welcome to the Mini Message Board</h3>
+                <% if (currentUser) { %>
+                    <h3>Welcome to the Mini Message Board - <%= currentUser.username %></h3>
+                <% } else { %>
+                    <h3>Welcome to the Mini Message Board</h3>
+                <% } %>
                 <p>This is a Express App build with the following tech stack:</p>
                 <ul>
                     <li>Express.js - Backend</li>
