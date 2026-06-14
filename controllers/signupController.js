@@ -4,7 +4,7 @@ const pool = require("../db/pool")
 const { links } = require("./indexController");
 
 function getSignUp(req, res) {
-    return res.render("signup/signupform", { title: "Sign Up Form", links: links(req) });
+    return res.render("signup/signupform", { title: "Sign Up", links: links(req) });
 }
 
 async function postSignUp(req, res, next) {
