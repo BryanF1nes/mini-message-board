@@ -33,7 +33,7 @@ async function main() {
     console.log("seeding...");
 
     const client = new Client({
-        connectionString: process.env.DEV_CONNECTION_STRING,
+        connectionString: process.env.CONNECTION_STRING,
     });
     await client.connect();
     console.log("connected...");

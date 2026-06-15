@@ -26,7 +26,7 @@ async function getMessageById(req, res) {
 
     const message = await db.getMessageById(messageId);
 
-    return res.render("message", { links: links(req), message: message });
+    return res.render("base-template", { title: `Message by ${message.username}`, content: "message", links: links(req), message: message });
 }
 
 async function getMessageByUser(req, res) {
@@ -38,7 +38,7 @@ async function getMessageByUser(req, res) {
 
     const messages = await db.getMessageByUser(username.toLowerCase());
 
-    return res.render("messages", { links: links(req), messages: messages });
+    return res.render("base-template", { title: `Search Results for ${username}`, content: "messages", links: links(req), messages: messages });
 }
 
 const postMessage = [
