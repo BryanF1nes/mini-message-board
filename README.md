@@ -39,7 +39,12 @@ Changelog items:
 - I will say I really like this changelog system, I will also add authorization soon.
 - Once I add authorization I will bring back the edit message feature.
 
-### Todo List:
+### Version 2.0.0 - Authorization and Tailwind
 
-- Add authorization
-- Add Tailwind
+Changelog items:
+
+- Authorization is now here with the help of passport and bcryptjs!
+- Tailwind and View templates are now updated.
+- A lot of CSS and views were cleaned up.
+- Next user profiles and roles?
+
