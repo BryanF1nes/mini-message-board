@@ -40,6 +40,13 @@ async function postChangelog(description, changeItems) {
     return;
 }
 
+// Users
+async function getAllUsers() {
+    const { rows } = await pool.query("SELECT * FROM users");
+
+    return rows;
+}
+
 module.exports = {
     getAllMessages,
     getMessageById,
@@ -47,5 +54,6 @@ module.exports = {
     updateMessageById,
     postMessage,
     getChangelogs,
+    getAllUsers,
     postChangelog
 }

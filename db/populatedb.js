@@ -2,14 +2,22 @@ require("dotenv").config();
 const { Client } = require("pg");
 
 const SQL = `
-DROP TABLE messages;
-DROP TABLE changelog;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS changelog;
+DROP TABLE IF EXISTS users;
+DROP TYPE IF EXISTS user_role;
+
+CREATE TYPE user_role as ENUM (
+    'standard',
+    'moderator',
+    'admin'
+);
 
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(255),
     password VARCHAR(255),
-    role VARCHAR(255),
+    role user_role NOT NULL DEFAULT 'standard',
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -33,7 +41,7 @@ async function main() {
     console.log("seeding...");
 
     const client = new Client({
-        connectionString: process.env.CONNECTION_STRING,
+        connectionString: process.env.DEV_CONNECTION_STRING,
     });
     await client.connect();
     console.log("connected...");

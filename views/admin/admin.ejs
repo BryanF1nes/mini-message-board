@@ -1,5 +1,9 @@
-<main class="mx-auto max-w-5xl px-6 py-12">
+<main class="mx-auto max-w-5xl px-6 py-12 space-y-8">
   <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
     <%- include("adminForm") %>
   </div>
+
+ <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
+     <%- include("userlist", { users }) %>
+ </div>
 </main>

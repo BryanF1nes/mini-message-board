@@ -1,19 +1,30 @@
 const db = require("../db/queries");
 
 function links(req, res) {
+    const links = [
+        { href: "/", text: "Home" },
+        { href: "/messages", text: "Messages" },
+    ];
+
     if (req.user) {
-        return [
-            { href: "/", text: "Home" },
-            { href: "/messages", text: "Messages" },
-            { href: "/log-out", text: "Log out" },
-        ]
+        if (req.user && req.user.role === 'admin') {
+            links.push(
+                { href: "/admin", text: "Admin" },
+                { href: "/log-out", text: "Log out" },
+            );
+
+            return links;
+        }
+
+        links.push({ href: "/log-out", text: "Log out" });
+        return links;
     } else {
-        return [
-            { href: "/", text: "Home" },
-            { href: "/messages", text: "Messages" },
+        links.push(
             { href: "/sign-up", text: "Sign up" },
-            { href: "/log-in", text: "Log in" },
-        ]
+            { href: "/log-in", text: "Log in" }
+        );
+
+        return links;
     }
 }
 
