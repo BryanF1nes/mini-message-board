@@ -20,7 +20,7 @@ function links(req, res) {
 async function getIndex(req, res) {
     const changes = await db.getChangelogs();
 
-    return res.render("index", { links: links(req), changes: changes });
+    return res.render("base-template", { links: links(req), changes: changes, content: "index", title: "Home" });
 }
 
 module.exports = { getIndex, links };

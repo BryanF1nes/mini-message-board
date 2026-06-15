@@ -1,11 +1,20 @@
-<form method="GET" action="/messages/search">
-  <div class="search">
-    <input
-      type="text"
-      id="username"
-      name="username"
-      placeholder="Search by username"
-    >
-    <button type="submit">Search</button>
-  </div>
+<form
+  class="flex items-center gap-3"
+  method="GET"
+  action="/messages/search"
+>
+  <input
+    type="text"
+    id="username"
+    name="username"
+    placeholder="Search by username"
+    class="w-[300px] rounded-xl border border-slate-200 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
+  >
+
+  <button
+    type="submit"
+    class="rounded-xl bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 active:translate-y-px"
+  >
+    Search
+  </button>
 </form>

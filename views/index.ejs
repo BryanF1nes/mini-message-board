@@ -1,34 +1,49 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="/css/styles.css">
-    </head>
-    <body>
-        <%- include('navbar', { links: links }); %>
-        <div class="container">
-            <div class="card">
-                <% if (currentUser) { %>
-                    <h3>Welcome to the Mini Message Board - <%= currentUser.username %></h3>
-                <% } else { %>
-                    <h3>Welcome to the Mini Message Board</h3>
-                <% } %>
-                <p>This is an Express App build with the following tech stack:</p>
-                <ul>
-                    <li>Express.js - Backend</li>
-                    <li>EJS - Templating language</li>
-                    <li>CSS - Styling</li>
-                    <li>Express Validator - Sanitization of Form elements</li>
-                </ul>
-                <br>
-                <p>This is a project for The Odin Projects Node course. The intention of this project is to gain familiarity with Express, and using the MVC pattern, Express validation for sanitization of form data. I have an on-going todo list of items I would like to add to this project to make it a worthy portfolio project.</p>
-            </div>
+<main class="mx-auto flex max-w-6xl flex-col items-center px-6 py-10">
 
-            <div class="card mt-4">
-                <h3>Changelog:</h3>
-                <% changes.forEach((change) => { %>
-                    <%- include("changelog/changelog", { changelog: change }) %>
-                <% }); %>
-            </div>
-        </div>
-        <%- include('footer'); %>
-    </body>
-</html>
+  <!-- Welcome Card -->
+  <section class="w-full rounded-[12px] border border-slate-200 bg-white p-6 shadow-md">
+
+    <% if (currentUser) { %>
+      <h3 class="mb-3 text-xl font-bold text-slate-900">
+        Welcome to the Mini Message Board - <%= currentUser.username %>
+      </h3>
+    <% } else { %>
+      <h3 class="mb-3 text-xl font-bold text-slate-900">
+        Welcome to the Mini Message Board
+      </h3>
+    <% } %>
+
+    <p class="mb-4 text-slate-500">
+      This is an Express App built with the following tech stack:
+    </p>
+
+    <ul class="mb-6 list-inside list-disc space-y-1 text-slate-700">
+      <li><strong>Express.js</strong> - Backend</li>
+      <li><strong>EJS</strong> - Templating language</li>
+      <li><strong>Tailwind</strong> - Styling</li>
+      <li><strong>Express Validator</strong> - Sanitization of form elements</li>
+      <li><strong>Passport & Bcrypt</strong> - User authentication</li>
+    </ul>
+
+    <p class="text-slate-600 leading-relaxed">
+      This is a project for The Odin Project's Node course. The intention of this project is to gain familiarity with Express and the MVC pattern, along with form validation and sanitization. I have an ongoing todo list of items I would like to add to make this a stronger portfolio project.
+    </p>
+
+  </section>
+
+  <!-- Changelog Card -->
+  <section class="mt-6 w-full rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
+
+    <h3 class="mb-4 text-xl font-bold text-slate-900">
+      Changelog
+    </h3>
+
+    <div class="space-y-4">
+      <% changes.forEach((change) => { %>
+        <%- include("changelog/changelog", { changelog: change }) %>
+      <% }); %>
+    </div>
+
+  </section>
+
+</main>

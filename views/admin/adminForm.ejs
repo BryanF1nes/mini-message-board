@@ -1,36 +1,72 @@
 <%- include("../partials/errors.ejs") %>
-<form method="POST" action="/admin/changelog/create">
-  <div>
-    <label for="description">Description</label>
+
+<form
+  method="POST"
+  action="/admin/changelog/create"
+  class="flex flex-col gap-4"
+>
+
+  <!-- Description -->
+  <div class="flex flex-col gap-2">
+    <label
+      for="description"
+      class="text-sm font-medium text-slate-700"
+    >
+      Description
+    </label>
+
     <input
       type="text"
       id="description"
       name="description"
-      placeholder="Enter the version number and description (e.g - Version 1.0.1 - HTML Support)"
+      placeholder="Version 1.0.1 - HTML Support"
       required
+      class="rounded-[12px] border border-slate-200 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
     >
   </div>
 
-  <div>
-    <label for="changes">Enter changes</label>
+  <!-- Changes -->
+  <div class="flex flex-col gap-2">
+    <label
+      for="changes"
+      class="text-sm font-medium text-slate-700"
+    >
+      Enter Changes
+    </label>
+
     <textarea
       id="changes"
       name="changes"
       rows="5"
-      placeholder="Enter the changes, each change should be on a new line"
+      placeholder="Enter each change on a new line"
       required
+      class="min-h-[120px] resize-y rounded-[12px] border border-slate-200 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
     ></textarea>
   </div>
 
-  <div>
-    <label for="password">Admin password</label>
-    <input 
-      id="password" 
-      name="password" 
-      type="password" 
+  <!-- Admin Password -->
+  <div class="flex flex-col gap-2">
+    <label
+      for="password"
+      class="text-sm font-medium text-slate-700"
+    >
+      Admin Password
+    </label>
+
+    <input
+      id="password"
+      name="password"
+      type="password"
       required
+      class="rounded-[12px] border border-slate-200 px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
     >
   </div>
 
-  <button type="submit">Post Changelog</button>
+  <button
+    type="submit"
+    class="self-start rounded-[12px] bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700 active:translate-y-px"
+  >
+    Post Changelog
+  </button>
+
 </form>
