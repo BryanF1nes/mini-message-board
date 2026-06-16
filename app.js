@@ -22,10 +22,6 @@ const logoutRouter = require("./routes/logoutRouter.js");
 // Styles
 const assetsPath = path.join(__dirname, "public");
 
-// Populate
-const { populate } = require("./populate");
-populate();
-
 // Middleware + Setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
