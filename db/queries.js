@@ -8,6 +8,12 @@ async function getAllMessages() {
     return rows;
 }
 
+async function getAllMessagesById(userId) {
+    const { rows } = await pool.query("SELECT * FROM messages WHERE user_id = $1", [userId]);
+
+    return rows;
+}
+
 async function getMessageById(messageId) {
     const { rows } = await pool.query("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.id WHERE messages.id = $1", [messageId]);
 
@@ -67,8 +73,25 @@ async function getProfileData(userId) {
     return rows[0]
 }
 
+async function editProfile(userId, body) {
+    const { first_name, last_name, email, bio } = body;
+
+    return await pool.query(
+        `UPDATE profile
+         SET
+            first_name = $2,
+            last_name = $3,
+            email = $4,
+            bio = $5
+         WHERE user_id = $1`,
+        [userId, first_name, last_name, email, bio]
+    );
+
+}
+
 module.exports = {
     getAllMessages,
+    getAllMessagesById,
     getMessageById,
     getMessageByUser,
     editMessageById,
@@ -78,5 +101,6 @@ module.exports = {
     getAllUsers,
     postChangelog,
     postUpdateRole,
-    getProfileData
+    getProfileData,
+    editProfile
 }

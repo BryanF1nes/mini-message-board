@@ -35,6 +35,27 @@
 
   <div class="mt-6 rounded-[12px] border border-slate-200 bg-white p-6 shadow-md">
     <h3 class="mb-2 text-xl font-bold text-slate-900">Messages</h3>
-    <p class="text-slate-500">User messages will appear here.</p>
-  </div>
+      <% if (messages.length === 0) { %>
+        <p class="text-slate-500">You have not posted any messages yet.</p>
+      <% } else { %>
+        <div class="space-y-4">
+          <% messages.forEach((message) => { %>
+            <div class="rounded-lg border border-slate-200 p-4">
+              <p class="whitespace-pre-wrap text-slate-800"><%= message.body %></p>
+                <div class="mt-2 flex gap-2 items-center justify-between">
+                  <p class="text-sm text-slate-500">
+                    <%= new Date(message.date_added).toLocaleString() %>
+                  </p>
+                    <div class="flex gap-2">
+                        <a href="/messages/<%= message.id %>/edit" class="font-medium text-blue-600 hover:text-blue-700">Edit</a>
+                        <form action="/messages/<%=message.id %>/delete" method="POST">
+                            <button type="submit" class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer">Delete</button>
+                        </form>
+                    </div>
+                 </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
 </main>
