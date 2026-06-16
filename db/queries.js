@@ -12,9 +12,8 @@ async function getMessageById(messageId) {
     return rows[0];
 }
 
-async function updateMessageById(messageId, data) {
-    await pool.query("UPDATE messages SET username = ($1), message = ($2), date_added = CURRENT_TIMESTAMP WHERE id = ($3)", [data.username, data.message, messageId])
-    return;
+async function editMessageById(messageId, data) {
+    await pool.query("UPDATE messages SET body = ($2) WHERE id = ($1)", [messageId, data]);
 }
 
 async function getMessageByUser(username) {
@@ -27,9 +26,10 @@ async function postMessage(userId, body) {
     return await pool.query("INSERT INTO messages (user_id, body) VALUES ($1, $2)", [userId, body]);
 }
 
-async function deleteMessageById(userId, messageId) {
-    return await pool.query("DELETE FROM messsages WHERE message.id = ($2) AND message.user_id = ($1)", [userId, messageId])
+async function deleteMessageById(messageId) {
+    const result = await pool.query("DELETE FROM messages WHERE id = $1 RETURNING *", [messageId]);
 
+    return result.rows[0];
 }
 
 // Changelogs
@@ -62,7 +62,7 @@ module.exports = {
     getAllMessages,
     getMessageById,
     getMessageByUser,
-    updateMessageById,
+    editMessageById,
     postMessage,
     deleteMessageById,
     getChangelogs,

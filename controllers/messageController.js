@@ -24,7 +24,7 @@ async function getMessageView(req, res) {
             messages: messages
         });
     } catch (error) {
-        throw new Error(`Could not grab messages: ${error.messages}`)
+        next(error);
     }
 };
 
@@ -40,7 +40,7 @@ async function getMessageById(req, res) {
             message: message
         });
     } catch (error) {
-        throw new Error(`That message may not exist: ${error.message}`)
+        next(error)
     }
 }
 
@@ -60,7 +60,23 @@ async function getMessageByUser(req, res) {
             messages: messages
         });
     } catch (error) {
-        throw new Error(`Could not get that message: ${error.message}`)
+        next(error);
+    }
+}
+
+async function getEditMessageById(req, res) {
+    const { messageId } = req.params;
+    try {
+        const message = await db.getMessageById(messageId);
+
+        return res.render("base-template", {
+            title: `Edit ${message.username}`,
+            content: "editMessage",
+            links: links(req),
+            message: message
+        });
+    } catch (error) {
+        next(error)
     }
 }
 
@@ -71,7 +87,9 @@ const postMessage = [
         if (!errors.isEmpty()) {
             const messages = await db.getAllMessages();
 
-            return res.status(400).render("messages", {
+            return res.status(400).render("base-template", {
+                title: "Messages",
+                content: "messages",
                 links: links(req),
                 messages: messages,
                 errors: errors.array(),
@@ -87,15 +105,47 @@ const postMessage = [
     }
 ];
 
-async function deleteMessageById(req, res) {
-    const messageId = req.params.id;
-    const userId = req.user.id
+const editMessageById = [
+    validateMessage,
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("base-template", {
+                title: `Edit ${message.username}`,
+                content: "editMessage",
+                links: links(req),
+                errors: errors.array(),
+            });
+        }
+
+        const { message } = matchedData(req);
+        const { messageId } = req.params;
+
+        await db.editMessageById(messageId, message);
+        return res.redirect(`/messages/${messageId}`)
+    }
+]
+
+async function deleteMessageById(req, res, next) {
     try {
-        await db.deleteMessageById(userId, messageId);
+        if (!req.user || req.user.role !== "admin") {
+            return res.status(403).send("Forbidden");
+        }
+
+        await db.deleteMessageById(req.params.messageId);
+
         return res.redirect("/messages");
     } catch (error) {
-        throw new Error(`Could not delete that message, it must not exist: ${error.message}`);
+        next(error);
     }
 }
 
-module.exports = { getMessageView, getMessageById, postMessage, getMessageByUser, deleteMessageById }
+module.exports = {
+    getMessageView,
+    getMessageById,
+    postMessage,
+    getMessageByUser,
+    deleteMessageById,
+    getEditMessageById,
+    editMessageById
+}

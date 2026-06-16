@@ -8,6 +8,8 @@ messageRouter.post("/create", messageController.postMessage);
 
 messageRouter.get("/search", messageController.getMessageByUser);
 messageRouter.get("/:messageId", messageController.getMessageById);
+messageRouter.get("/:messageId/edit", messageController.getEditMessageById);
+messageRouter.post("/:messageId/edit", messageController.editMessageById);
 messageRouter.post("/:messageId/delete", messageController.deleteMessageById);
 
 module.exports = messageRouter;

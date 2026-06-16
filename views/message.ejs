@@ -9,11 +9,16 @@
     <p class="mb-6 text-slate-700">
       <%= message.body %>
     </p>
-    <p
-      class="message-date text-sm text-slate-500"
-      data-date="<%= message.date_added.toISOString() %>"
-    >
-      Loading...
-    </p>
+    <div class="flex items-center justify-between text-sm text-slate-500">
+        <p
+          class="message-date text-sm text-slate-500"
+          data-date="<%= message.date_added.toISOString() %>"
+        >
+          Loading...
+        </p>
+        <% if (currentUser && currentUser.id === message.user_id || currentUser && currentUser.role === 'admin') { %>
+            <a href="/messages/<%= message.id %>/edit" class="font-medium text-blue-600 hover:text-blue-700">Edit</a>
+        <% } %>
+    </div>
   </div>
 </main>

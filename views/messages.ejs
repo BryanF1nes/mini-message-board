@@ -41,11 +41,7 @@
              <div class="flex gap-2">
                   <a href="/messages/<%= message.id %>" class="font-medium text-blue-600 hover:text-blue-700">View</a>
 
-                    <% if (currentUser.username === message.username) { %>
-                            <a href="/messages/<%= message.id %>/edit" class="font-medium text-blue-600 hover:text-blue-700">Edit</a>
-                    <% } %>
-
-                    <% if (currentUser && currentUser.role === "admin") { %>
+                    <% if (currentUser && currentUser.role === "admin" || currentUser && currentUser.id === message.user_id) { %>
                         <form action="/messages/<%=message.id %>/delete" method="POST">
                             <button type="submit" class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer">Delete</button>
                         </form>
