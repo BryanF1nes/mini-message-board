@@ -60,6 +60,13 @@ async function postUpdateRole(userId, role) {
     return true;
 }
 
+// Profile
+async function getProfileData(userId) {
+    const { rows } = await pool.query("SELECT * FROM profile WHERE user_id = $1", [userId]);
+
+    return rows[0]
+}
+
 module.exports = {
     getAllMessages,
     getMessageById,
@@ -70,5 +77,6 @@ module.exports = {
     getChangelogs,
     getAllUsers,
     postChangelog,
-    postUpdateRole
+    postUpdateRole,
+    getProfileData
 }

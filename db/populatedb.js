@@ -2,12 +2,7 @@ require("dotenv").config();
 const { Client } = require("pg");
 
 const SQL = `
-DROP TABLE IF EXISTS messages;
-DROP TABLE IF EXISTS changelog;
-DROP TABLE IF EXISTS users;
-DROP TYPE IF EXISTS user_role;
-
-CREATE TYPE user_role as ENUM (
+CREATE TYPE IF NOT EXISTS user_role as ENUM (
     'standard',
     'moderator',
     'admin'
@@ -33,6 +28,15 @@ CREATE TABLE IF NOT EXISTS changelog (
     description TEXT NOT NULL,
     items TEXT[] NOT NULL,
     date_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_id INTEGER REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS profile (
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email TEXT,
+    bio TEXT,
     user_id INTEGER REFERENCES users(id)
 );
 `;

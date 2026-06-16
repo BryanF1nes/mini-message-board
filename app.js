@@ -18,6 +18,7 @@ const adminRouter = require("./routes/adminRouter.js");
 const signupRouter = require("./routes/signupRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
 const logoutRouter = require("./routes/logoutRouter.js");
+const profileRouter = require("./routes/profileRouter.js");
 
 // Styles
 const assetsPath = path.join(__dirname, "public");
@@ -75,6 +76,7 @@ app.use("/admin", adminRouter);
 app.use("/sign-up", signupRouter);
 app.use("/log-in", loginRouter);
 app.use("/log-out", logoutRouter);
+app.use("/profile", profileRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, (error) => {
