@@ -29,9 +29,17 @@ function links(req, res) {
 }
 
 async function getIndex(req, res) {
-    const changes = await db.getChangelogs();
-
-    return res.render("base-template", { links: links(req), changes: changes, content: "index", title: "Home" });
+    try {
+        const changes = await db.getChangelogs();
+        return res.render("base-template", {
+            title: "Home",
+            content: "index",
+            links: links(req),
+            changes: changes
+        });
+    } catch (error) {
+        throw new Error(`Could not get changelogs: ${error.message}`);
+    }
 }
 
 module.exports = { getIndex, links };

@@ -47,6 +47,12 @@ async function getAllUsers() {
     return rows;
 }
 
+async function postUpdateRole(userId, role) {
+    await pool.query("UPDATE users SET role = ($2) WHERE id = ($1)", [userId, role]);
+
+    return true;
+}
+
 module.exports = {
     getAllMessages,
     getMessageById,
@@ -55,5 +61,6 @@ module.exports = {
     postMessage,
     getChangelogs,
     getAllUsers,
-    postChangelog
+    postChangelog,
+    postUpdateRole
 }

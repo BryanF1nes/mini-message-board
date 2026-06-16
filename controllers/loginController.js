@@ -2,7 +2,11 @@ const { links } = require("./indexController")
 const passport = require("passport");
 
 function getLogin(req, res) {
-    return res.render("base-template", { content: "login/login", title: "Login", links: links(req) })
+    return res.render("base-template", {
+        title: "Login",
+        content: "login/login",
+        links: links(req)
+    });
 }
 
 const postLogin = passport.authenticate("local", {

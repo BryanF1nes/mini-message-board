@@ -10,35 +10,58 @@ const validateMessage = [
 ];
 
 async function getMessageView(req, res) {
-    const messages = await db.getAllMessages()
-    console.log(messages);
+    try {
+        const messages = await db.getAllMessages()
+        if (!messages) {
+            res.status(404).send("Messages could not be loaded at this time.");
+            return;
+        }
 
-    if (!messages) {
-        res.status(404).send("Messages could not be loaded at this time.");
-        return;
+        return res.render("base-template", {
+            title: "Messages",
+            content: "messages",
+            links: links(req),
+            messages: messages
+        });
+    } catch (error) {
+        throw new Error(`Could not grab messages: ${error.messages}`)
     }
-
-    return res.render("base-template", { title: "Messages", content: "messages", links: links(req), messages: messages });
 };
 
 async function getMessageById(req, res) {
     const { messageId } = req.params;
+    try {
+        const message = await db.getMessageById(messageId);
 
-    const message = await db.getMessageById(messageId);
-
-    return res.render("base-template", { title: `Message by ${message.username}`, content: "message", links: links(req), message: message });
+        return res.render("base-template", {
+            title: `Message by ${message.username}`,
+            content: "message",
+            links: links(req),
+            message: message
+        });
+    } catch (error) {
+        throw new Error(`That message may not exist: ${error.message}`)
+    }
 }
 
 async function getMessageByUser(req, res) {
     const { username } = req.query;
-
     if (username.toLowerCase() === "") {
         return res.redirect("/messages");
     }
 
-    const messages = await db.getMessageByUser(username.toLowerCase());
+    try {
+        const messages = await db.getMessageByUser(username.toLowerCase());
 
-    return res.render("base-template", { title: `Search Results for ${username}`, content: "messages", links: links(req), messages: messages });
+        return res.render("base-template", {
+            title: `${username} messages`,
+            content: "messages",
+            links: links(req),
+            messages: messages
+        });
+    } catch (error) {
+        throw new Error(`Could not get that message: ${error.message}`)
+    }
 }
 
 const postMessage = [
