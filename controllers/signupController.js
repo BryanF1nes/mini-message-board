@@ -14,13 +14,11 @@ function getSignUp(req, res) {
 async function postSignUp(req, res, next) {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const userResult = await pool.query("INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id",
+        const { rows } = await pool.query("INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id",
             [req.body.username, hashedPassword]
         );
 
-        const userId = userResult.rows[0].id;
-
-        await pool.query("INSERT INTO profiles (user_id) VALUES ($1)", [userId]);
+        await pool.query("INSERT INTO profile (user_id) VALUES ($1)", [rows[0].id]);
 
         res.redirect("/log-in");
     } catch (err) {
