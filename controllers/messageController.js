@@ -87,5 +87,15 @@ const postMessage = [
     }
 ];
 
+async function deleteMessageById(req, res) {
+    const messageId = req.params.id;
+    const userId = req.user.id
+    try {
+        await db.deleteMessageById(userId, messageId);
+        return res.redirect("/messages");
+    } catch (error) {
+        throw new Error(`Could not delete that message, it must not exist: ${error.message}`);
+    }
+}
 
-module.exports = { getMessageView, getMessageById, postMessage, getMessageByUser }
+module.exports = { getMessageView, getMessageById, postMessage, getMessageByUser, deleteMessageById }

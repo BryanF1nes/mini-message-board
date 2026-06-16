@@ -27,6 +27,11 @@ async function postMessage(userId, body) {
     return await pool.query("INSERT INTO messages (user_id, body) VALUES ($1, $2)", [userId, body]);
 }
 
+async function deleteMessageById(userId, messageId) {
+    return await pool.query("DELETE FROM messsages WHERE message.id = ($2) AND message.user_id = ($1)", [userId, messageId])
+
+}
+
 // Changelogs
 async function getChangelogs() {
     const { rows } = await pool.query("SELECT * FROM changelog");
@@ -59,6 +64,7 @@ module.exports = {
     getMessageByUser,
     updateMessageById,
     postMessage,
+    deleteMessageById,
     getChangelogs,
     getAllUsers,
     postChangelog,
