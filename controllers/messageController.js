@@ -128,7 +128,16 @@ const editMessageById = [
 
 async function deleteMessageById(req, res, next) {
     try {
-        if (!req.user || req.user.role !== "admin") {
+        const message = await db.getMessageById(req.params.messageId);
+
+        if (!message) {
+            return res.status(404).send("Message not found");
+        }
+
+        const isAdmin = req.user.role === "admin";
+        const isOwner = req.user.id === message.user_id;
+
+        if (!isAdmin && !isOwner) {
             return res.status(403).send("Forbidden");
         }
 
