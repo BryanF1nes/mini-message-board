@@ -2,11 +2,17 @@ require("dotenv").config();
 const { Client } = require("pg");
 
 const SQL = `
-CREATE TYPE IF NOT EXISTS user_role as ENUM (
+DO $$
+BEGIN
+CREATE TYPE user_role as ENUM (
     'standard',
     'moderator',
     'admin'
 );
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
 
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -21,6 +27,7 @@ CREATE TABLE IF NOT EXISTS messages (
     user_id INTEGER REFERENCES users(id),
     body TEXT,
     date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    thread_id INTEGER DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS changelog (

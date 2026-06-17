@@ -12,4 +12,6 @@ messageRouter.get("/:messageId/edit", messageController.getEditMessageById);
 messageRouter.post("/:messageId/edit", messageController.editMessageById);
 messageRouter.post("/:messageId/delete", messageController.deleteMessageById);
 
+messageRouter.post("/:messageId/replies/create", messageController.postReplyMessage)
+
 module.exports = messageRouter;

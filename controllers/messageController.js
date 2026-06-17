@@ -37,7 +37,8 @@ async function getMessageById(req, res) {
             title: `Message by ${message.username}`,
             content: "message",
             links: links(req),
-            message: message
+            message: message,
+            replies: [],
         });
     } catch (error) {
         next(error)
@@ -105,6 +106,10 @@ const postMessage = [
     }
 ];
 
+async function postReplyMessage(req, res) {
+    return;
+}
+
 const editMessageById = [
     validateMessage,
     async (req, res) => {
@@ -156,5 +161,6 @@ module.exports = {
     getMessageByUser,
     deleteMessageById,
     getEditMessageById,
-    editMessageById
+    editMessageById,
+    postReplyMessage
 }
