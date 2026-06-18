@@ -1,5 +1,6 @@
 const { body, validationResult, matchedData } = require("express-validator");
 const { links } = require("./indexController");
+const Message = require("../classes/Message.js");
 const db = require("../db/queries");
 
 const validateMessage = [
@@ -9,9 +10,9 @@ const validateMessage = [
         .withMessage("You have to say something"),
 ];
 
-async function getMessageView(req, res) {
+async function getMessageView(req, res, next) {
     try {
-        const messages = await db.getAllMessages()
+        const messages = await Message.messages();
         if (!messages) {
             res.status(404).send("Messages could not be loaded at this time.");
             return;
@@ -31,14 +32,27 @@ async function getMessageView(req, res) {
 async function getMessageById(req, res) {
     const { messageId } = req.params;
     try {
-        const message = await db.getMessageById(messageId);
+        const message = await Message.messagesByMessageID(messageId);
+        console.log(message);
 
         return res.render("base-template", {
             title: `Message by ${message.username}`,
             content: "message",
             links: links(req),
             message: message,
-            replies: [],
+            replies: [
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+                { date_added: new Date(), body: 'This is cool', username: 'John' },
+            ],
         });
     } catch (error) {
         next(error)

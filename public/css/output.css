@@ -251,6 +251,9 @@
   .mb-6 {
     margin-bottom: calc(var(--spacing) * 6);
   }
+  .mb-8 {
+    margin-bottom: calc(var(--spacing) * 8);
+  }
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
@@ -280,6 +283,9 @@
   }
   .max-h-\[250px\] {
     max-height: 250px;
+  }
+  .max-h-\[500px\] {
+    max-height: 500px;
   }
   .min-h-16 {
     min-height: calc(var(--spacing) * 16);
@@ -418,6 +424,9 @@
   .overflow-x-auto {
     overflow-x: auto;
   }
+  .overflow-y-auto {
+    overflow-y: auto;
+  }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
   }
@@ -510,6 +519,9 @@
   }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
+  }
+  .pr-2 {
+    padding-right: calc(var(--spacing) * 2);
   }
   .text-left {
     text-align: left;
