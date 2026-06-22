@@ -1,6 +1,7 @@
 const { body, validationResult, matchedData } = require("express-validator");
 const { links } = require("./indexController");
 const Message = require("../classes/Message.js");
+const Replies = require("../classes/Replies.js");
 const db = require("../db/queries");
 
 const validateMessage = [
@@ -33,26 +34,14 @@ async function getMessageById(req, res) {
     const { messageId } = req.params;
     try {
         const message = await Message.messagesByMessageID(messageId);
-        console.log(message);
+        const replies = await Replies.repliesByMessageID(messageId);
 
         return res.render("base-template", {
             title: `Message by ${message.username}`,
             content: "message",
             links: links(req),
             message: message,
-            replies: [
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-                { date_added: new Date(), body: 'This is cool', username: 'John' },
-            ],
+            replies: replies,
         });
     } catch (error) {
         next(error)
@@ -121,7 +110,13 @@ const postMessage = [
 ];
 
 async function postReplyMessage(req, res) {
-    return;
+    const userId = req.user.id;
+    const { message } = req.body;
+    const { messageId } = req.params;
+
+    await Replies.postReply(userId, message, messageId);
+
+    return res.redirect(`/messages/${messageId}`);
 }
 
 const editMessageById = [
