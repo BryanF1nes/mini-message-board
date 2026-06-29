@@ -19,6 +19,7 @@ const signupRouter = require("./routes/signupRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
 const logoutRouter = require("./routes/logoutRouter.js");
 const profileRouter = require("./routes/profileRouter.js");
+const api = require("./routes/apiRouter.js");
 
 // Styles
 const assetsPath = path.join(__dirname, "public");
@@ -77,6 +78,7 @@ app.use("/sign-up", signupRouter);
 app.use("/log-in", loginRouter);
 app.use("/log-out", logoutRouter);
 app.use("/profile", profileRouter);
+app.use("/api", api);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, (error) => {
@@ -85,4 +87,5 @@ app.listen(PORT, (error) => {
     }
 
     console.log(`Express app listening on port: ${PORT}`);
+    console.log(`Visit http://localhost:${PORT}`);
 });
