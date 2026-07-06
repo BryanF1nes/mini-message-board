@@ -18,6 +18,10 @@ class Message {
 
         return rows[0];
     }
+
+    async postMessage(userId, { body, can_reply }) {
+        return await pool.query("INSERT INTO messages (user_id, body, can_reply) VALUES ($1, $2, $3)", [userId, body, can_reply]);
+    }
 }
 
 module.exports = new Message();
@@ -30,10 +34,6 @@ module.exports = new Message();
 //     const { rows } = await pool.query("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.id WHERE LOWER(users.username) = $1", [username]);
 //
 //     return rows;
-// }
-//
-// async function postMessage(userId, body) {
-//     return await pool.query("INSERT INTO messages (user_id, body) VALUES ($1, $2)", [userId, body]);
 // }
 //
 // async function deleteMessageById(messageId) {

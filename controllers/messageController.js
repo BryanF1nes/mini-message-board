@@ -9,6 +9,9 @@ const validateMessage = [
         .trim()
         .notEmpty()
         .withMessage("You have to say something"),
+    body("locked")
+        .optional()
+        .toBoolean()
 ];
 
 async function getMessageView(req, res, next) {
@@ -101,10 +104,11 @@ const postMessage = [
             });
         }
 
-        const { message } = matchedData(req);
+        const data = matchedData(req);
         const userId = req.user.id;
+        const can_reply = data.locked ?? false;
 
-        await db.postMessage(userId, message);
+        await Message.postMessage(userId, { body: data.message, can_reply })
 
         return res.redirect("/messages");
     }

@@ -52,11 +52,15 @@
           <% }); %>
         </div>
       <% } else { %>
-        <p class="text-slate-500">No replies yet. Be the first to reply.</p>
+        <% if (message.can_reply) { %>
+            <p class="text-slate-500">No replies yet. Be the first to reply.</p>
+        <% } else { %>
+            <p class="text-slate-500">This message does not allow replies.</p>
+        <% } %>
       <% } %>
     </div>
 
-    <% if (currentUser) { %>
+    <% if (currentUser && message.can_reply) { %>
       <div class="mt-8 border-t border-slate-200 pt-6">
         <h3 class="mb-4 text-lg font-semibold text-slate-900">Post a Reply</h3>
 

@@ -30,8 +30,8 @@ async function getMessageByUser(username) {
     return rows;
 }
 
-async function postMessage(userId, body) {
-    return await pool.query("INSERT INTO messages (user_id, body) VALUES ($1, $2)", [userId, body]);
+async function postMessage(userId, { body, locked }) {
+    return await pool.query("INSERT INTO messages (user_id, body, is_locked) VALUES ($1, $2, $3)", [userId, body, locked]);
 }
 
 async function deleteMessageById(messageId) {
