@@ -14,8 +14,7 @@ const validateMessage = [
 async function getMessageView(req, res, next) {
     try {
         const messages = await Message.messages();
-        const replies = await Replies.replies();
-        if (!messages || !replies) {
+        if (!messages) {
             res.status(404).send("Messages could not be loaded at this time.");
             return;
         }
@@ -25,7 +24,6 @@ async function getMessageView(req, res, next) {
             content: "messages",
             links: links(req),
             messages: messages,
-            replies: replies
         });
     } catch (error) {
         next(error);

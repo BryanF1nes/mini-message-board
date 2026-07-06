@@ -78,7 +78,7 @@ app.use("/sign-up", signupRouter);
 app.use("/log-in", loginRouter);
 app.use("/log-out", logoutRouter);
 app.use("/profile", profileRouter);
-app.use("/api", api);
+app.use("/api/", api);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, (error) => {

@@ -3,8 +3,10 @@ const Replies = require("../classes/Replies.js");
 
 const router = Router();
 
-router.get("/replies", (req, res) => {
-    return res.json(Replies.replies)
+router.get("/replies", async (req, res) => {
+    const replies = await Replies.replies();
+
+    return res.json(replies)
 });
 
 module.exports = router;

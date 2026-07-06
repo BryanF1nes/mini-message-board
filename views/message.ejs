@@ -17,11 +17,11 @@
     </div>
 
     <div class="border-t border-slate-200 pt-6">
-      <h3 class="mb-4 text-lg font-semibold text-slate-900">
-        Replies (<%= replies.length %>)
-      </h3>
 
       <% if (replies.length > 0) { %>
+          <h3 class="mb-4 text-lg font-semibold text-slate-900">
+            Replies (<%= replies.length %>)
+          </h3>
         <div class="max-h-[500px] space-y-4 overflow-y-auto pr-2">
           <% replies.forEach((reply) => { %>
             <div id="reply-<%= reply.id %>" class="rounded-xl border border-slate-200 bg-slate-50 p-4">
