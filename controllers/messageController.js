@@ -18,6 +18,7 @@ async function getMessageView(req, res, next) {
             res.status(404).send("Messages could not be loaded at this time.");
             return;
         }
+        console.log(messages);
 
         return res.render("base-template", {
             title: "Messages",
