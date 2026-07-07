@@ -22,14 +22,14 @@ class Message {
     async postMessage(userId, { body, can_reply }) {
         return await pool.query("INSERT INTO messages (user_id, body, can_reply) VALUES ($1, $2, $3)", [userId, body, can_reply]);
     }
+
+    async editMessageById(messageId, { body, can_reply }) {
+        await pool.query("UPDATE messages SET body = ($2), can_reply = ($3) WHERE id = ($1)", [messageId, body, can_reply]);
+    }
 }
 
 module.exports = new Message();
 
-// async function editMessageById(messageId, data) {
-//     await pool.query("UPDATE messages SET body = ($2) WHERE id = ($1)", [messageId, data]);
-// }
-//
 // async function getMessageByUser(username) {
 //     const { rows } = await pool.query("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.id WHERE LOWER(users.username) = $1", [username]);
 //

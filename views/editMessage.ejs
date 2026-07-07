@@ -18,6 +18,24 @@
                     class="min-h-[120px] max-h-[250px] resize-y rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
             ><%= message.body %></textarea>
     </div>
+
+    <div class="flex items-center gap-3 mb-2">
+      <input
+        type="checkbox"
+        id="locked"
+        name="locked"
+        class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-100"
+        <%= message.can_reply ? "checked" : "" %>
+      >
+
+      <label
+        for="locked"
+        class="text-sm font-medium text-slate-700"
+      >
+        Can users reply to this message?
+      </label>
+    </div>
+
     <div class="flex items-center justify-between text-sm text-slate-500">
         <p
           class="message-date text-sm text-slate-500"

@@ -137,10 +137,13 @@ const editMessageById = [
             });
         }
 
-        const { message } = matchedData(req);
+        const data = matchedData(req);
         const { messageId } = req.params;
+        const can_reply = data.locked ?? false;
 
-        await db.editMessageById(messageId, message);
+        await Message.editMessageById(messageId, { body: data.message, can_reply })
+        console.log(data, can_reply);
+
         return res.redirect(`/messages/${messageId}`)
     }
 ]
