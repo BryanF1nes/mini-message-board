@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS messages (
     user_id INTEGER REFERENCES users(id),
     body TEXT,
     date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_locked BOOLEAN DEFAULT FALSE
+    can_reply BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS replies (
